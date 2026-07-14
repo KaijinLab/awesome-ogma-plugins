@@ -10,7 +10,7 @@
       "author": "Ogma Plugins",
       "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/master/plugins/request-counter",
       "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/request-counter-v1.0.1/request-counter.zip",
-      "sha256": "pending",
+      "sha256": "9f698217fc3fc4129d67f04af9986e24cb8eed3aa2dfac9cf5feea3aec4f5479",
       "tags": [
         "example",
         "reference"
@@ -28,7 +28,7 @@
       "author": "Ogma Plugins",
       "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/master/plugins/security-headers",
       "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/security-headers-v1.0.1/security-headers.zip",
-      "sha256": "pending",
+      "sha256": "2a22ba867c538b3e6761fa83ca254e9b3e151d158ac1b37905f6046259124093",
       "tags": [
         "security",
         "passive",
