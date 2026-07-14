@@ -1,13 +1,15 @@
 {
   "id": "request-counter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Request Counter",
   "description": "Counts intercepted HTTP requests. Reference plugin demonstrating the minimal Ogma plugin structure.",
   "author": {
     "name": "Ogma Plugins",
     "url": "https://github.com/KaijinLab/awesome-ogma-plugins"
   },
-  "permissions": ["ui_extension"],
+  "permissions": [
+    "ui_extension"
+  ],
   "backend": "dist/backend.js",
   "frontend": {
     "entrypoint": "dist/frontend.js",

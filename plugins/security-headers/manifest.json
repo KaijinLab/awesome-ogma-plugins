@@ -1,6 +1,6 @@
 {
   "id": "security-headers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "name": "Security Headers Checker",
   "description": "Passively checks HTTP responses for missing or weak security headers. Creates findings for each gap.",
   "author": {
