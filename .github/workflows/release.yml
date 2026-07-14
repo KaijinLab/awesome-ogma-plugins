@@ -22,6 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '24'
+          node-version-file: '' # explicit version above, suppress file lookup
 
       - name: Detect plugins to release
         id: changed
@@ -59,9 +60,9 @@ jobs:
             echo "  Version: $VERSION"
 
             # Build TypeScript plugins
-            if [ -f "$PLUGIN_DIR/package.json" ]; then
+            if [ -f "$PLUGIN_DIR/package.json" ] && [ -f "$PLUGIN_DIR/package-lock.json" ]; then
               echo "  Building TypeScript..."
-              (cd "$PLUGIN_DIR" && npm ci --prefer-offline --no-audit && npm run build)
+              (cd "$PLUGIN_DIR" && npm ci --no-audit && npm run build)
             fi
 
             # Build ZIP

@@ -20,18 +20,5 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Build TypeScript plugins
-        run: |
-          for plugin_dir in plugins/*/; do
-            if [ -f "$plugin_dir/package.json" ]; then
-              plugin_id=$(basename "$plugin_dir")
-              echo "Building $plugin_id..."
-              cd "$plugin_dir"
-              npm ci --prefer-offline --no-audit
-              npm run build
-              cd ../..
-            fi
-          done
-
       - name: Validate plugins.json
         run: node scripts/validate.js
