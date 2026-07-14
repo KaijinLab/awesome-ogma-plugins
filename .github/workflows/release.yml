@@ -21,12 +21,21 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
-      - name: Detect changed plugins
+      - name: Detect plugins to release
         id: changed
         run: |
-          CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'plugins/**' | sed 's|plugins/||; s|/.*||' | sort -u | tr '\n' ' ')
+          # Plugins changed in this commit
+          FROM_GIT=$(git diff --name-only HEAD~1 HEAD -- 'plugins/**' | sed 's|plugins/||; s|/.*||' | sort -u | tr '\n' ' ')
+          # Plugins that still have sha256:pending in plugins.json (initial bootstrap)
+          FROM_PENDING=$(node -e "
+            const p = JSON.parse(require('fs').readFileSync('plugins.json','utf8'));
+            const ids = p.plugins.filter(x => x.sha256 === 'pending').map(x => x.id).join(' ');
+            process.stdout.write(ids);
+          ")
+          # Merge and deduplicate
+          CHANGED=$(echo "$FROM_GIT $FROM_PENDING" | tr ' ' '\n' | sort -u | grep -v '^$' | tr '\n' ' ')
           echo "plugins=$CHANGED" >> "$GITHUB_OUTPUT"
           echo "Changed plugins: $CHANGED"
 
