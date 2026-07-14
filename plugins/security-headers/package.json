@@ -1,0 +1,15 @@
+{
+  "name": "security-headers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs",
+    "typecheck": "tsc --noEmit",
+    "dev": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "@ogma/sdk": "*",
+    "esbuild": "^0.25.0",
+    "typescript": "^5.0.0"
+  }
+}

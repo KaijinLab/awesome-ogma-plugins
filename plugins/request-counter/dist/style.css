@@ -1,0 +1,76 @@
+.rc-root {
+  padding: 16px;
+  font-family: system-ui, sans-serif;
+  color: #e2e4ed;
+  background: #0f1117;
+  min-height: 100%;
+}
+
+.rc-heading {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: #e2e4ed;
+}
+
+.rc-subheading {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 12px 0 6px 0;
+  color: #9ca3af;
+}
+
+.rc-count-row {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.rc-count {
+  font-weight: 700;
+  font-size: 22px;
+  color: #4f8ef7;
+  margin-left: 4px;
+}
+
+.rc-hosts {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.rc-host {
+  font-size: 12px;
+  font-family: monospace;
+  padding: 3px 0;
+  color: #9ca3af;
+  border-bottom: 1px solid #1f2230;
+}
+
+.rc-reset {
+  margin-top: 16px;
+  padding: 6px 14px;
+  background: #1a1d27;
+  border: 1px solid #2a2d3a;
+  color: #9ca3af;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.rc-reset:hover {
+  border-color: #4f8ef7;
+  color: #e2e4ed;
+}
+
+.rc-reset:focus-visible {
+  outline: 2px solid #4f8ef7;
+  outline-offset: 2px;
+}
+
+.rc-host--empty {
+  color: #4b5563;
+  font-style: italic;
+}
+
+.rc-host--error {
+  color: #f87171;
+}

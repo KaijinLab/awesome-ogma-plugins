@@ -1,0 +1,32 @@
+{
+  "version": "1",
+  "updated": "2026-07-14",
+  "plugins": [
+    {
+      "id": "request-counter",
+      "name": "Request Counter",
+      "version": "1.0.0",
+      "description": "Counts intercepted HTTP requests. Reference plugin demonstrating the minimal Ogma plugin structure.",
+      "author": "Ogma Plugins",
+      "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/main/plugins/request-counter",
+      "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/request-counter-v1.0.0/request-counter.zip",
+      "sha256": "pending",
+      "tags": ["example", "reference"],
+      "ogma_min_version": "1.0.0",
+      "permissions": ["ui_extension"]
+    },
+    {
+      "id": "security-headers",
+      "name": "Security Headers Checker",
+      "version": "1.0.0",
+      "description": "Passively checks HTML responses for missing or weak security headers. Creates findings for each gap detected.",
+      "author": "Ogma Plugins",
+      "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/main/plugins/security-headers",
+      "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/security-headers-v1.0.0/security-headers.zip",
+      "sha256": "pending",
+      "tags": ["security", "passive", "headers", "reconnaissance"],
+      "ogma_min_version": "1.0.0",
+      "permissions": ["write_findings", "ui_extension"]
+    }
+  ]
+}

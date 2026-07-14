@@ -1,0 +1,104 @@
+name: Release plugins
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'plugins/**'
+      - 'plugins.json'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Detect changed plugins
+        id: changed
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD -- 'plugins/**' | sed 's|plugins/||; s|/.*||' | sort -u | tr '\n' ' ')
+          echo "plugins=$CHANGED" >> "$GITHUB_OUTPUT"
+          echo "Changed plugins: $CHANGED"
+
+      - name: Build and release changed plugins
+        if: steps.changed.outputs.plugins != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          UPDATED=false
+
+          for PLUGIN_ID in ${{ steps.changed.outputs.plugins }}; do
+            PLUGIN_DIR="plugins/$PLUGIN_ID"
+            [ -d "$PLUGIN_DIR" ] || continue
+            [ -f "$PLUGIN_DIR/manifest.json" ] || continue
+
+            echo "Processing plugin: $PLUGIN_ID"
+
+            # Read version from manifest
+            VERSION=$(node -e "const m=require('./$PLUGIN_DIR/manifest.json'); console.log(m.version)")
+            echo "  Version: $VERSION"
+
+            # Build TypeScript plugins
+            if [ -f "$PLUGIN_DIR/package.json" ]; then
+              echo "  Building TypeScript..."
+              (cd "$PLUGIN_DIR" && npm ci --prefer-offline --no-audit && npm run build)
+            fi
+
+            # Build ZIP
+            ZIP_NAME="${PLUGIN_ID}.zip"
+            (cd "$PLUGIN_DIR" && rm -f "$ZIP_NAME" && zip -r "$ZIP_NAME" manifest.json dist/ README.md LICENSE)
+
+            # Compute SHA256
+            SHA256=$(sha256sum "$PLUGIN_DIR/$ZIP_NAME" | cut -d' ' -f1)
+            echo "  SHA256: $SHA256"
+
+            # Create or update GitHub Release
+            TAG="${PLUGIN_ID}-v${VERSION}"
+            RELEASE_URL="https://github.com/${{ github.repository }}/releases/download/${TAG}/${PLUGIN_ID}.zip"
+
+            echo "  Creating/updating release $TAG..."
+            # Delete existing release and tag if they exist (for version re-releases)
+            gh release delete "$TAG" --yes 2>/dev/null || true
+            git push --delete origin "$TAG" 2>/dev/null || true
+
+            gh release create "$TAG" \
+              --title "${PLUGIN_ID} v${VERSION}" \
+              --notes "Release of the ${PLUGIN_ID} plugin, version ${VERSION}." \
+              "$PLUGIN_DIR/$ZIP_NAME"
+
+            # Update plugins.json
+            node -e "
+              const fs = require('fs');
+              const p = JSON.parse(fs.readFileSync('plugins.json', 'utf8'));
+              const entry = p.plugins.find(x => x.id === '$PLUGIN_ID');
+              if (entry) {
+                entry.version = '$VERSION';
+                entry.download = '$RELEASE_URL';
+                entry.sha256 = '$SHA256';
+              }
+              p.updated = new Date().toISOString().slice(0, 10);
+              fs.writeFileSync('plugins.json', JSON.stringify(p, null, 2) + '\n');
+            "
+            UPDATED=true
+            echo "  Done: $RELEASE_URL"
+          done
+
+          if [ "$UPDATED" = "true" ]; then
+            echo "Committing updated plugins.json..."
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add plugins.json
+            git commit -m "chore: update plugins.json release URLs and hashes [skip ci]"
+            git push
+          fi
