@@ -15,7 +15,7 @@
         "example",
         "reference"
       ],
-      "ogma_min_version": "1.0.0",
+      "ogma_min_version": "0.1.0",
       "permissions": [
         "ui_extension"
       ]
@@ -35,7 +35,7 @@
         "headers",
         "reconnaissance"
       ],
-      "ogma_min_version": "1.0.0",
+      "ogma_min_version": "0.1.0",
       "permissions": [
         "write_findings",
         "ui_extension"
