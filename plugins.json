@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "updated": "2026-07-14",
+  "updated": "2026-07-15",
   "plugins": [
     {
       "id": "request-counter",
@@ -10,7 +10,7 @@
       "author": "Ogma Plugins",
       "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/master/plugins/request-counter",
       "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/request-counter-v1.0.2/request-counter.zip",
-      "sha256": "pending",
+      "sha256": "565d3e42115e97cc19dc732917a9812278fdd332adef3f20150ab13b7fbf8095",
       "tags": [
         "example",
         "reference"
@@ -28,7 +28,7 @@
       "author": "Ogma Plugins",
       "homepage": "https://github.com/KaijinLab/awesome-ogma-plugins/tree/master/plugins/security-headers",
       "download": "https://github.com/KaijinLab/awesome-ogma-plugins/releases/download/security-headers-v1.0.2/security-headers.zip",
-      "sha256": "pending",
+      "sha256": "1bd67fb42d013bc27d113467cd462c9a8230ed57a92c14a6b53fed5ffba0b33d",
       "tags": [
         "security",
         "passive",
