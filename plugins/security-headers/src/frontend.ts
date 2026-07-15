@@ -9,11 +9,11 @@
 
       const root = document.createElement('div');
       root.style.cssText =
-        'padding:16px;font-family:system-ui,sans-serif;color:#e2e4ed;background:#0f1117;min-height:100%';
+        'padding:16px;font-family:system-ui,sans-serif;color:var(--plugin-text,#e2e4ed);background:var(--plugin-bg,#0f1117);min-height:100%';
 
       const heading = document.createElement('h2');
       heading.textContent = 'Security Headers';
-      heading.style.cssText = 'font-size:16px;font-weight:600;margin:0 0 8px 0';
+      heading.style.cssText = 'font-size:16px;font-weight:600;margin:0 0 8px 0;color:var(--plugin-text,#e2e4ed)';
       root.appendChild(heading);
 
       const info = document.createElement('p');
@@ -21,7 +21,7 @@
         'Passively checks HTML responses for missing security headers. ' +
         'Findings appear in the Findings view after each intercepted HTML page.';
       info.style.cssText =
-        'font-size:12px;color:#6b7280;margin:0 0 16px 0;line-height:1.5';
+        'font-size:12px;color:var(--plugin-text-muted,#6b7280);margin:0 0 16px 0;line-height:1.5';
       root.appendChild(info);
 
       const checks: Array<{ name: string; severity: string }> = [
@@ -44,7 +44,7 @@
         th.textContent = col;
         th.setAttribute('scope', 'col');
         th.style.cssText =
-          'text-align:left;padding:4px 8px;color:#9ca3af;font-weight:500;border-bottom:1px solid #1f2230';
+          'text-align:left;padding:4px 8px;color:var(--plugin-text-muted,#9ca3af);font-weight:500;border-bottom:1px solid var(--plugin-border,#1f2230)';
         headerRow.appendChild(th);
       }
       thead.appendChild(headerRow);
@@ -57,12 +57,12 @@
         const tdName = document.createElement('td');
         tdName.textContent = c.name;
         tdName.style.cssText =
-          'font-family:monospace;padding:4px 8px;border-bottom:1px solid #1f2230;color:#c9d1d9';
+          'font-family:monospace;padding:4px 8px;border-bottom:1px solid var(--plugin-border,#1f2230);color:var(--plugin-text,#e2e4ed)';
 
         const tdSev = document.createElement('td');
         tdSev.textContent = c.severity;
         tdSev.style.cssText =
-          'padding:4px 8px;border-bottom:1px solid #1f2230;color:' + severityColor(c.severity);
+          'padding:4px 8px;border-bottom:1px solid var(--plugin-border,#1f2230);color:' + severityColor(c.severity);
 
         tr.appendChild(tdName);
         tr.appendChild(tdSev);
@@ -71,11 +71,10 @@
       table.appendChild(tbody);
       root.appendChild(table);
 
-      // Render directly in the iframe -- DOM elements can't cross the postMessage bridge
-      document.body.style.cssText = 'margin:0;padding:0;background:#0f1117';
+      // Render directly in the iframe
+      document.body.style.cssText = 'margin:0;padding:0;background:var(--plugin-bg,#0f1117)';
       document.body.appendChild(root);
 
-      // Tell the host about the navigation page (no body element)
       sdk.navigation.addPage('/security-headers', { title: 'Security Headers' });
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
