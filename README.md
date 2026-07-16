@@ -8,7 +8,7 @@
 
 # Awesome Ogma Plugins
 
-### A curated registry of community plugins for [Ogma](https://github.com/KaijinLab/ogma).
+### A curated registry of community plugins for [Ogma](https://ogma.kaijinlab.com).
 
 <br/>
 
